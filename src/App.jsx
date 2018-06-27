@@ -6,7 +6,7 @@ class App extends Component {
     super(props);
     this.state = {
       text: "",
-      priority: "",
+      priority: "2",
       todos: []
     };
     this.handleChange = this.handleChange.bind(this);
@@ -30,7 +30,7 @@ class App extends Component {
   handleClick() {
     let arr = this.state.todos.slice();
     arr.push({ text: this.state.text, priority: this.state.priority });
-    this.setState({ todos: arr })
+    this.setState({ todos: arr, priority: '2' })
   }
 
   render() {
@@ -52,7 +52,7 @@ class App extends Component {
                 <br />
                 <p className="text font-weight-bold">How much of a priority is this?</p>
                 <select className="create-todo-priority form-control" size='1' name="priority" value={this.state.priority} onChange={this.handleChange}>
-                  <option value={0} hidden>Select a priority</option>
+                  <option value={0} disabled>Select a priority</option>
                   <option value={1}>Low Priorirty</option>
                   <option value={2}>Medium Priority</option>
                   <option value={3}>High Priority</option>
@@ -72,7 +72,7 @@ class App extends Component {
               <ul className="list-group">
                 {this.state.todos.length ? (
                   this.state.todos.map((details, i) =>
-                    <EditTodo key={details.text + i} index={i} details={details} editUpdateTodo={this.editTodo} deleteUpdateTodo={this.deleteTodo} />)
+                    <EditTodo key={Math.random().toString()} index={i} details={details} editUpdateTodo={this.editTodo} deleteUpdateTodo={this.deleteTodo} />)
                 ) : (
                     <li className="list-group-item list-group-item-success">
                       <h3><strong>Welcome to Very Simple Todo App</strong></h3>

@@ -4,8 +4,8 @@ export default class EditTodo extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            newText: "",
-            newPriority: "",
+            newText: this.props.details.text,
+            newPriority: this.props.details.priority,
             isEditing: false
         };
         this.handleChange = this.handleChange.bind(this);
@@ -23,14 +23,14 @@ export default class EditTodo extends React.Component {
         this.setState({ isEditing: true });
     }
     saving() {
-        this.props.editUpdateTodo({ text: this.refs.newText.value, priority: this.state.newPriority }, this.props.index);
+        this.props.editUpdateTodo({ text: this.state.newText, priority: this.state.newPriority }, this.props.index);
         this.setState({ isEditing: false });
     }
 
     renderNormal() {
         return (
             <div>
-                <input type="checkbox"></input>
+                <input type="checkbox"></input>{/*should have a function to control when two buttons below work*/}
                 <span>{this.props.details.text}</span>
 
                 <button type="button" className="delete-todo btn btn-link pull-right" onClick={this.removing}>
@@ -51,7 +51,7 @@ export default class EditTodo extends React.Component {
                     <div className="col-md-12">
 
                         <label>Description</label>
-                        <textarea className="update-todo-text form-control" rows="5" name="text" ref="newText" defaultValue={this.props.details.text} onChange={this.handleChange}></textarea>
+                        <textarea className="update-todo-text form-control" rows="5" name="newText" value={this.state.newText} onChange={this.handleChange}></textarea>
                     </div>
                 </div>
 
@@ -59,7 +59,7 @@ export default class EditTodo extends React.Component {
                     <div className="col-md-6">
                         <h6><strong>Priority</strong></h6>
                         <select className="update-todo-priority form-control" size='1' name="newPriority" value={this.state.newPriority} onChange={this.handleChange}>
-                            <option value={0} hidden>Select a priority</option>
+                            <option value={0} disabled>Select a priority</option>
                             <option value={1}>Low Priorirty</option>
                             <option value={2}>Medium Priority</option>
                             <option value={3}>High Priority</option>
